@@ -9,7 +9,6 @@
     ":semanticCommits",
     ":enablePreCommit"
   ],
-  "branchConcurrentLimit": 1,
   "packageRules": [
     {
       "matchManagers": [
