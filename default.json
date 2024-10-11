@@ -35,6 +35,10 @@
       ],
       "automerge": true,
       "automergeType": "branch"
+    },
+    {
+      "matchPackageNames": ["googleapis/release-please-action"],
+      "allowedVersions": "<=3"
     }
   ],
   "platformAutomerge": true
