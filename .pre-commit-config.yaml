@@ -16,7 +16,7 @@ repos:
       - id: check-yaml
       - id: mixed-line-ending
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.22.0
+    rev: v8.22.1
     hooks:
       - id: gitleaks
   - repo: https://github.com/grigoriev/pre-commit-check-git-user
