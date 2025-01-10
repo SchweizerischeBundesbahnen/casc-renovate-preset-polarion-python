@@ -15,7 +15,8 @@
         "pre-commit"
       ],
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "branch",
+      "automergeStrategy": "squash"
     },
     {
       "description": "Automerge non-major updates",
@@ -26,14 +27,16 @@
         "digest"
       ],
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "branch",
+      "automergeStrategy": "squash"
     },
     {
       "matchDepTypes": [
         "devDependencies"
       ],
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "branch",
+      "automergeStrategy": "squash"
     },
     {
       "matchPackageNames": ["googleapis/release-please-action"],
