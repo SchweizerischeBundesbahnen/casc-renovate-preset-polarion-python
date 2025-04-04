@@ -10,7 +10,6 @@
   ],
   "automergeType": "branch",
   "platformAutomerge": true,
-  "requiredStatusChecks": null,
   "prCreation": "not-pending",
   "packageRules": [
     {
