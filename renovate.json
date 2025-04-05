@@ -3,5 +3,5 @@
   "extends": [
     "github>SchweizerischeBundesbahnen/casc-renovate-preset-polarion-python"
   ],
-  "requiredStatusChecks": null
+  "ignoreTests": true
 }
