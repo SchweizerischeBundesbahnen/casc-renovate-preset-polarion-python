@@ -35,6 +35,14 @@
       "automerge": true
     },
     {
+      "matchManagers": [
+        "poetry"
+      ],
+      "postUpdateOptions": [
+        "poetry-lock"
+      ]
+    },
+    {
       "matchPackageNames": ["googleapis/release-please-action"],
       "allowedVersions": "<=3"
     }
