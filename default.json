@@ -8,6 +8,9 @@
     ":semanticCommits",
     ":enablePreCommit"
   ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "automergeType": "branch",
   "platformAutomerge": true,
   "prCreation": "not-pending",
