@@ -22,7 +22,8 @@
   "packageRules": [
     {
       "matchManagers": [
-        "pre-commit"
+        "pre-commit",
+        "github-actions"
       ],
       "automerge": true
     },
