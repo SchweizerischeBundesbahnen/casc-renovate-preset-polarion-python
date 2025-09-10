@@ -28,18 +28,9 @@
       "automerge": true
     },
     {
-      "description": "Automerge non-major updates",
-      "matchUpdateTypes": [
-        "minor",
-        "patch",
-        "pin",
-        "digest"
-      ],
-      "automerge": true
-    },
-    {
       "matchDepTypes": [
-        "devDependencies"
+        "dev-dependencies",
+        "test"
       ],
       "automerge": true
     },
@@ -54,6 +45,16 @@
     {
       "matchPackageNames": ["googleapis/release-please-action"],
       "allowedVersions": "<=3"
+    },
+    {
+      "description": "Automerge non-major updates",
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "automerge": true
     }
   ]
 }
