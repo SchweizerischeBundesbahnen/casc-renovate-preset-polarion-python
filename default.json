@@ -5,8 +5,15 @@
   ],
   "extends": [
     "config:best-practices",
-    ":semanticCommits",
-    ":enablePreCommit"
+    ":semanticCommits"
+  ],
+  "enabledManagers": [
+    "pep621",
+    "poetry",
+    "pre-commit",
+    "github-actions",
+    "renovate-config-presets",
+    "custom.regex"
   ],
   "automergeType": "branch",
   "platformAutomerge": true,
@@ -21,7 +28,7 @@
   },
   "packageRules": [
     {
-      "description": "Automerge pre-commit hooks",
+      "description": "Automerge pre-commit hooks and GitHub Actions",
       "matchManagers": [
         "pre-commit",
         "github-actions"
@@ -29,7 +36,7 @@
       "automerge": true
     },
     {
-      "description": "Automerge dev dependencies",
+      "description": "Automerge Python dev dependencies",
       "matchDepTypes": [
         "dev-dependencies",
         "test"
@@ -37,6 +44,7 @@
       "automerge": true
     },
     {
+      "description": "DEPRECATED: Poetry support - Remove after migration to uv is complete",
       "matchManagers": [
         "poetry"
       ],
@@ -51,12 +59,6 @@
         "patch",
         "pin",
         "digest"
-      ],
-      "automerge": true
-    },
-    {
-      "matchDepTypes": [
-        "devDependencies"
       ],
       "automerge": true
     }

@@ -1,17 +1,138 @@
 # casc-renovate-preset-polarion-python
-Renovate configuration for Polarion Python Repos
+
+Renovate bot preset configuration for Python projects at SBB (Schweizerische Bundesbahnen).
+
+**Compatible with:** Renovate v41+ (tested with v42.17.0)
+
+## Features
+
+### Python Ecosystem Support
+- ✅ **uv** - Modern Python package manager (via pep621 manager)
+- ✅ **Poetry** - Legacy support (deprecated, will be removed after migration)
+- ✅ **Pre-commit** - Automated hook updates
+- ✅ **GitHub Actions** - Workflow dependency updates
+
+### Automerge Strategy
+- 🔀 **Branch-based automerge** - Silent merges when tests pass
+- 📦 **Lock file maintenance** - Weekly transitive dependency updates
+- 🔒 **Safe boundaries** - Manual review required for major updates
+- ⚡ **Auto-updates:**
+  - Pre-commit hooks
+  - GitHub Actions
+  - Dev/test dependencies
+  - Minor/patch updates
 
 ## How to Use
-use `github>SchweizerischeBundesbahnen/casc-renovate-preset-polarion-python` in extends section of your `renovate.json` file.
 
-## Developer Setup
+Add this preset to your `renovate.json`:
 
-An editor capable of editing text file.
+```json
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>SchweizerischeBundesbahnen/casc-renovate-preset-polarion-python"
+  ]
+}
+```
 
-### Testing
+## What This Preset Does
 
-using pre-commit
+### Enabled Package Managers
+
+Only Python ecosystem, CI/CD, and preset management managers are enabled:
+- `pep621` - PEP 621 standard (uv, pyproject.toml, uv.lock)
+- `poetry` - Poetry (deprecated, transitional)
+- `pre-commit` - Pre-commit framework hooks
+- `github-actions` - GitHub Actions workflows
+- `renovate-config-presets` - Renovate preset references in renovate.json
+- `custom.regex` - Custom regex dependency extraction (flexible for consumers)
+
+**All other managers are disabled** (npm, docker, terraform, etc.)
+
+#### Why Restrict Managers?
+
+| Aspect | Without Restriction | **With Restriction (This Preset)** |
+|--------|-------------------|-----------------------------------|
+| Python dependencies | ✅ Detected | ✅ Detected |
+| npm/Node.js | ✅ Detected if present | ❌ Disabled |
+| Docker | ✅ Detected if present | ❌ Disabled |
+| Terraform | ✅ Detected if present | ❌ Disabled |
+| Intent | Generic preset | **Python-specific preset** |
+
+This restriction ensures predictable, Python-only behavior across all repositories using this preset.
+
+### Automerge Rules
+
+| Update Type | Automerged? |
+|-------------|-------------|
+| Pre-commit hooks | ✅ Yes |
+| GitHub Actions | ✅ Yes |
+| Python dev dependencies | ✅ Yes |
+| Minor/patch updates | ✅ Yes |
+| Major updates | ❌ No (manual review) |
+
+### Lock File Maintenance
+
+Transitive dependencies in `uv.lock` or `poetry.lock` are updated weekly automatically.
+
+## Migration Guide: Poetry → uv
+
+### Current Behavior
+
+This preset supports **both Poetry and uv** during the transition period.
+
+**If your project uses Poetry:**
+- Poetry dependencies continue to work
+- `poetry.lock` is automatically updated
+- ⚠️ **Note:** Poetry support is deprecated and will be removed in the future
+
+**If your project uses uv:**
+- uv is auto-detected via `uv.lock` file
+- Both `pyproject.toml` and `uv.lock` are updated
+- Lock file maintenance keeps transitive dependencies current
+
+### Migrating from Poetry to uv
+
+1. **Migrate your project to uv** (see [uv documentation](https://docs.astral.sh/uv/))
+2. **No changes needed to Renovate config** - uv is automatically detected
+3. Remove `poetry.lock` from your repository
+4. Renovate will detect `uv.lock` and use the pep621 manager
+
+## Developer Setup (This Repository)
+
+### Prerequisites
+- Text editor
+- Git configured with `@sbb.ch` email address
+
+### Testing Changes
+
+**Validate configuration:**
+```bash
+# JSON syntax
+jq empty default.json
+
+# Renovate config validation
+npx renovate-config-validator default.json
+```
+
+**Run pre-commit hooks:**
+```bash
+pre-commit run --all-files
+```
 
 ## Deployment
 
-The actual main branch is directly used
+Changes to `default.json` are **live immediately** when merged to `main` branch.
+
+⚠️ **No CI/CD pipeline** - all consuming repositories will receive updates directly.
+
+## Documentation
+
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Technical analysis and design decisions
+- **[CLAUDE.md](CLAUDE.md)** - AI assistant development guidance
+
+## Support
+
+For issues or questions about this preset:
+- Open an issue in this repository
+- Contact the SBB Polarion Python team
