@@ -176,18 +176,21 @@ Must use prefix: `"custom.regex"`
 **Global Stabilization Period:**
 - `minimumReleaseAge: "3 days"` applies to **all automerged updates**
 - Rationale: Community has time to find issues before automerge
+- **Exception:** Security vulnerabilities (`osv-offline` datasource) bypass stabilization
+  - Creates PRs immediately for CVEs and security advisories
+  - Prevents 3-day delay for critical security patches
 - Can be overridden per packageRule if needed (e.g., `"minimumReleaseAge": "0 days"` for trusted internal packages)
 
 **Automerge Rules:**
 
 | Update Type | Automerge? | Stabilization | Reason |
 |-------------|-----------|---------------|--------|
+| Security vulnerabilities | ❌ No | **0 days** | Immediate PR, manual review with `security` label |
 | pre-commit hooks | ✅ Yes | 3 days | Low risk, frequently updated |
 | github-actions | ✅ Yes | 3 days | Low risk, frequently updated |
 | Minor/patch updates | ✅ Yes | 3 days | Semantic versioning guarantees |
 | Pin/digest updates | ✅ Yes | 3 days | Security, no version change |
 | Major updates | ❌ No | N/A | Requires manual review |
-| Security vulnerabilities | ❌ No | N/A | Manual review with `security` label |
 
 ### Lock File Maintenance
 

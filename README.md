@@ -15,9 +15,10 @@ Renovate bot preset configuration for Python projects at SBB (Schweizerische Bun
 ### Automerge Strategy
 - 🔀 **Branch-based automerge** - Silent merges when tests pass
 - ⏱️ **3-day stabilization** - All updates wait 3 days after release before automerge
+- 🚨 **Security exception** - Vulnerability alerts bypass stabilization (immediate PRs)
 - 📦 **Lock file maintenance** - Monday 4am transitive dependency updates
 - 🔒 **Safe boundaries** - Manual review required for major updates
-- 🔐 **Security alerts** - Manual review with `security` label
+- 🔐 **Security alerts** - Manual review with `security` label, created immediately
 - 🐍 **Python >=3.12** - Enforces minimum Python version compatibility
 - ⚡ **Auto-updates:**
   - Pre-commit hooks (after 3 days)
@@ -67,15 +68,16 @@ This restriction ensures predictable, Python-only behavior across all repositori
 
 | Update Type | Automerged? | Stabilization Period |
 |-------------|-------------|---------------------|
+| Security vulnerabilities | ❌ No (manual review) | **0 days (immediate)** |
 | Pre-commit hooks | ✅ Yes | 3 days |
 | GitHub Actions | ✅ Yes | 3 days |
 | Minor/patch updates | ✅ Yes | 3 days |
 | Major updates | ❌ No (manual review) | N/A |
-| Security vulnerabilities | ❌ No (manual review) | N/A |
 
 **Stabilization Period:**
 - All automerged updates wait 3 days after release
-- Allows community time to discover issues
+- **Exception:** Security vulnerabilities create PRs immediately (no wait)
+- Allows community time to discover issues in regular updates
 - Can be overridden per-repository if needed
 
 ### Lock File Maintenance
