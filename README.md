@@ -14,13 +14,15 @@ Renovate bot preset configuration for Python projects at SBB (Schweizerische Bun
 
 ### Automerge Strategy
 - 🔀 **Branch-based automerge** - Silent merges when tests pass
-- 📦 **Lock file maintenance** - Weekly transitive dependency updates
+- ⏱️ **3-day stabilization** - All updates wait 3 days after release before automerge
+- 📦 **Lock file maintenance** - Monday 4am transitive dependency updates
 - 🔒 **Safe boundaries** - Manual review required for major updates
+- 🔐 **Security alerts** - Manual review with `security` label
+- 🐍 **Python >=3.12** - Enforces minimum Python version compatibility
 - ⚡ **Auto-updates:**
-  - Pre-commit hooks
-  - GitHub Actions
-  - Dev/test dependencies
-  - Minor/patch updates
+  - Pre-commit hooks (after 3 days)
+  - GitHub Actions (after 3 days)
+  - Minor/patch updates (after 3 days)
 
 ## How to Use
 
@@ -63,17 +65,25 @@ This restriction ensures predictable, Python-only behavior across all repositori
 
 ### Automerge Rules
 
-| Update Type | Automerged? |
-|-------------|-------------|
-| Pre-commit hooks | ✅ Yes |
-| GitHub Actions | ✅ Yes |
-| Python dev dependencies | ✅ Yes |
-| Minor/patch updates | ✅ Yes |
-| Major updates | ❌ No (manual review) |
+| Update Type | Automerged? | Stabilization Period |
+|-------------|-------------|---------------------|
+| Pre-commit hooks | ✅ Yes | 3 days |
+| GitHub Actions | ✅ Yes | 3 days |
+| Minor/patch updates | ✅ Yes | 3 days |
+| Major updates | ❌ No (manual review) | N/A |
+| Security vulnerabilities | ❌ No (manual review) | N/A |
+
+**Stabilization Period:**
+- All automerged updates wait 3 days after release
+- Allows community time to discover issues
+- Can be overridden per-repository if needed
 
 ### Lock File Maintenance
 
-Transitive dependencies in `uv.lock` or `poetry.lock` are updated weekly automatically.
+Transitive dependencies in `uv.lock` or `poetry.lock` are updated automatically:
+- **Schedule:** Monday mornings at 4am
+- **Automerge:** Enabled (respects 3-day stabilization)
+- **Purpose:** Keep indirect dependencies current with security patches
 
 ## Migration Guide: Poetry → uv
 
@@ -108,14 +118,17 @@ This preset supports **both Poetry and uv** during the transition period.
 
 **Validate configuration:**
 ```bash
-# JSON syntax
+# JSON syntax validation (required)
 jq empty default.json
 
-# Renovate config validation
-npx renovate-config-validator default.json
+# Schema validation via IDE (recommended)
+# VSCode/IDEs validate against $schema automatically
+
+# CLI validation (requires GitHub token, not recommended for local use)
+npx --yes renovate validate-config default.json
 ```
 
-**Run pre-commit hooks:**
+**Run pre-commit hooks (MANDATORY before commit):**
 ```bash
 pre-commit run --all-files
 ```

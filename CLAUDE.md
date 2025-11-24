@@ -48,34 +48,59 @@ The preset is **not a Python codebase** - it's a Renovate configuration file pub
 - Includes preset management (`renovate-config-presets`) and custom regex support (`custom.regex`) for flexibility
 
 **Poetry → uv Migration:**
-- Poetry manager: Marked DEPRECATED with clear comment in `default.json:45-52`
+- Poetry manager: Marked DEPRECATED with clear comment in `default.json:37-45`
 - Remove Poetry from `enabledManagers` after migration complete
 - uv support: Via `pep621` manager (auto-detected by `uv.lock` presence)
 
 **Automerge Strategy:**
 - `automergeType: "branch"` - Silent automerge (PR only created if tests fail)
 - `platformAutomerge: true` - Uses GitHub native auto-merge
-- Automerges: pre-commit, github-actions, dev-dependencies, non-major updates
-- `lockFileMaintenance`: Enabled, weekly schedule for transitive dependencies
+- `minimumReleaseAge: "3 days"` - **Global 3-day stabilization** for all automerged updates
+  - Applies to: pre-commit, github-actions, non-major updates (minor/patch/pin/digest)
+  - Rationale: Community has time to find issues before automerge
+  - Can be overridden per packageRule if needed (e.g., internal SBB packages)
+- Major updates: Require manual review (`automerge: false`)
+- `lockFileMaintenance`: Enabled, Monday 4am schedule for transitive dependencies
+
+**Security & Constraints:**
+- `vulnerabilityAlerts`: Enabled with `security` label, manual review required
+- `constraints.python: ">=3.12"` - Enforces minimum Python version compatibility
 
 ## Development Commands
 
 ### Validation
 
-**JSON syntax check:**
+**JSON syntax validation:**
 ```bash
 jq empty default.json
 ```
+- Validates JSON syntax (required)
+- Fast and reliable
+- No external dependencies
 
 **Renovate config validation:**
 ```bash
-npx renovate-config-validator default.json
+# Schema validation via IDE/editor
+# VSCode/IDEs validate against "$schema" automatically
+# Check for squiggly lines/diagnostics in editor
+
+# CLI validation requires GitHub token (not practical for local use)
+npx --yes renovate validate-config default.json
+# Note: Requires GITHUB_TOKEN environment variable
+# Not recommended for routine validation
 ```
+- **Primary method**: Use IDE/editor with JSON schema support
+  - Schema: `https://docs.renovatebot.com/renovate-schema.json`
+  - VSCode, IntelliJ, etc. provide real-time validation
+- **CLI method**: Requires GitHub authentication, not suitable for local development
+- **Alternative**: Test changes in a downstream repo with actual Renovate bot
 
 **Pre-commit checks (MANDATORY before commit):**
 ```bash
 pre-commit run --all-files
 ```
+- Includes `check-json` hook for syntax validation
+- Runs all quality checks (formatting, secrets detection, etc.)
 
 ### Pre-commit Hooks
 

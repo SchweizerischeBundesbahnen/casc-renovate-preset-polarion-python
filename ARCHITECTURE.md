@@ -20,9 +20,12 @@ All configuration options used in this preset are stable, core features with no 
 **Core Settings:**
 - `automergeType: "branch"` - Silent automerge (PR only created if tests fail)
 - `platformAutomerge: true` - Uses GitHub's native auto-merge feature
+- `minimumReleaseAge: "3 days"` - Global stabilization period for all automerged updates
 - `prCreation: "not-pending"` - Create PRs immediately, don't wait for status
 - `rebaseWhen: "behind-base-branch"` - Keep branches up to date
-- `lockFileMaintenance` - Weekly automated lock file updates for transitive dependencies
+- `lockFileMaintenance` - Monday 4am automated lock file updates for transitive dependencies
+- `vulnerabilityAlerts` - Enabled with `security` label, manual review required
+- `constraints.python: ">=3.12"` - Enforces minimum Python version compatibility
 
 ## Package Manager Support Matrix
 
@@ -158,27 +161,33 @@ Must use prefix: `"custom.regex"`
 **Configuration:**
 ```json
 "automergeType": "branch",
-"platformAutomerge": true
+"platformAutomerge": true,
+"minimumReleaseAge": "3 days"
 ```
 
 **Behavior:**
 1. Renovate creates a branch for updates
-2. CI runs on the branch
-3. **If tests pass:** Changes pushed directly to base branch (silent merge)
-4. **If tests fail:** PR created for manual review
-5. No notifications for successful automerges
+2. **Waits 3 days after release** (stabilization period)
+3. CI runs on the branch after waiting period
+4. **If tests pass:** Changes pushed directly to base branch (silent merge)
+5. **If tests fail:** PR created for manual review
+6. No notifications for successful automerges
+
+**Global Stabilization Period:**
+- `minimumReleaseAge: "3 days"` applies to **all automerged updates**
+- Rationale: Community has time to find issues before automerge
+- Can be overridden per packageRule if needed (e.g., `"minimumReleaseAge": "0 days"` for trusted internal packages)
 
 **Automerge Rules:**
 
-| Update Type | Automerge? | Reason |
-|-------------|-----------|--------|
-| pre-commit hooks | ✅ Yes | Low risk, frequently updated |
-| github-actions | ✅ Yes | Low risk, frequently updated |
-| Python dev-dependencies | ✅ Yes | Test dependencies, doesn't affect prod |
-| Python test dependencies | ✅ Yes | Test-only scope |
-| Minor/patch updates | ✅ Yes | Semantic versioning guarantees |
-| Pin/digest updates | ✅ Yes | Security, no version change |
-| Major updates | ❌ No | Requires manual review |
+| Update Type | Automerge? | Stabilization | Reason |
+|-------------|-----------|---------------|--------|
+| pre-commit hooks | ✅ Yes | 3 days | Low risk, frequently updated |
+| github-actions | ✅ Yes | 3 days | Low risk, frequently updated |
+| Minor/patch updates | ✅ Yes | 3 days | Semantic versioning guarantees |
+| Pin/digest updates | ✅ Yes | 3 days | Security, no version change |
+| Major updates | ❌ No | N/A | Requires manual review |
+| Security vulnerabilities | ❌ No | N/A | Manual review with `security` label |
 
 ### Lock File Maintenance
 
@@ -187,15 +196,15 @@ Must use prefix: `"custom.regex"`
 "lockFileMaintenance": {
   "enabled": true,
   "automerge": true,
-  "extends": ["schedule:weekly"]
+  "schedule": ["before 4am on monday"]
 }
 ```
 
 **Purpose:**
 - Updates transitive dependencies in `uv.lock` / `poetry.lock`
-- Runs weekly (independent of direct dependency updates)
+- Runs Monday mornings at 4am (independent of direct dependency updates)
 - Critical for security patches in sub-dependencies
-- Auto-merges if tests pass
+- Auto-merges if tests pass (respects global 3-day stabilization)
 
 ## Dependency Type Reference
 

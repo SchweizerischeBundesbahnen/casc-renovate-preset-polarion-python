@@ -1,8 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": [
-    "Default Renovate preset for Polarion Python repos"
-  ],
+  "description": "Default Renovate preset for Python repositories maintained by the SBB Polarion Team.",
   "extends": [
     "config:best-practices",
     ":semanticCommits"
@@ -19,11 +17,12 @@
   "platformAutomerge": true,
   "prCreation": "not-pending",
   "rebaseWhen": "behind-base-branch",
+  "minimumReleaseAge": "3 days",
   "lockFileMaintenance": {
     "enabled": true,
     "automerge": true,
-    "extends": [
-      "schedule:weekly"
+    "schedule": [
+      "before 4am on monday"
     ]
   },
   "packageRules": [
@@ -32,14 +31,6 @@
       "matchManagers": [
         "pre-commit",
         "github-actions"
-      ],
-      "automerge": true
-    },
-    {
-      "description": "Automerge Python dev dependencies",
-      "matchDepTypes": [
-        "dev-dependencies",
-        "test"
       ],
       "automerge": true
     },
@@ -61,6 +52,23 @@
         "digest"
       ],
       "automerge": true
+    },
+    {
+      "description": "Major updates require manual review",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
     }
-  ]
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": [
+      "security"
+    ],
+    "automerge": false
+  },
+  "constraints": {
+    "python": ">=3.12"
+  }
 }
