@@ -27,13 +27,6 @@
   },
   "packageRules": [
     {
-      "description": "Security vulnerabilities - immediate PR creation without stabilization wait",
-      "matchDatasources": [
-        "osv-offline"
-      ],
-      "minimumReleaseAge": "0 days"
-    },
-    {
       "description": "Automerge pre-commit hooks and GitHub Actions",
       "matchManagers": [
         "pre-commit",
@@ -66,6 +59,13 @@
         "major"
       ],
       "automerge": false
+    },
+    {
+      "description": "Security vulnerabilities - immediate PR creation without stabilization wait",
+      "matchDatasources": [
+        "osv-offline"
+      ],
+      "minimumReleaseAge": "0 days"
     }
   ],
   "vulnerabilityAlerts": {
