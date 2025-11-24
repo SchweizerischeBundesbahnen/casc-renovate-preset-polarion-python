@@ -55,17 +55,19 @@ The preset is **not a Python codebase** - it's a Renovate configuration file pub
 **Automerge Strategy:**
 - `automergeType: "branch"` - Silent automerge (PR only created if tests fail)
 - `platformAutomerge: true` - Uses GitHub native auto-merge
-- `minimumReleaseAge: "3 days"` - **Global 3-day stabilization** for all automerged updates
+- `branchConcurrentLimit: 3` - Maximum 3 concurrent update branches
+- `minimumReleaseAge: "3 days"` - **Global 3-day stabilization** for all automerged updates (no exceptions)
   - Applies to: pre-commit, github-actions, non-major updates (minor/patch/pin/digest)
   - Rationale: Community has time to find issues before automerge
-  - **Exception:** Security vulnerabilities bypass stabilization (immediate PR creation)
   - Can be overridden per packageRule if needed (e.g., internal SBB packages)
+- Pre-commit: `ignoreTests: true` - automerges even if CI fails
+- GitHub Actions: Requires CI to pass before automerge
 - Major updates: Require manual review (`automerge: false`)
 - `lockFileMaintenance`: Enabled, Monday 4am schedule for transitive dependencies
 
 **Security & Constraints:**
 - `vulnerabilityAlerts`: Enabled with `security` label, manual review required
-- Security vulnerabilities: **Immediate PR creation** (no 3-day wait) via `osv-offline` datasource
+- Security vulnerabilities: Subject to 3-day stabilization like all other updates
 - `constraints.python: ">=3.12"` - Enforces minimum Python version compatibility
 
 ## Development Commands

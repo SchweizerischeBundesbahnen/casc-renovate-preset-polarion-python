@@ -20,6 +20,7 @@ All configuration options used in this preset are stable, core features with no 
 **Core Settings:**
 - `automergeType: "branch"` - Silent automerge (PR only created if tests fail)
 - `platformAutomerge: true` - Uses GitHub's native auto-merge feature
+- `branchConcurrentLimit: 3` - Maximum 3 concurrent update branches
 - `minimumReleaseAge: "3 days"` - Global stabilization period for all automerged updates
 - `prCreation: "not-pending"` - Create PRs immediately, don't wait for status
 - `rebaseWhen: "behind-base-branch"` - Keep branches up to date
@@ -162,6 +163,7 @@ Must use prefix: `"custom.regex"`
 ```json
 "automergeType": "branch",
 "platformAutomerge": true,
+"branchConcurrentLimit": 3,
 "minimumReleaseAge": "3 days"
 ```
 
@@ -172,22 +174,21 @@ Must use prefix: `"custom.regex"`
 4. **If tests pass:** Changes pushed directly to base branch (silent merge)
 5. **If tests fail:** PR created for manual review
 6. No notifications for successful automerges
+7. Maximum 3 concurrent update branches to avoid overwhelming CI
 
 **Global Stabilization Period:**
-- `minimumReleaseAge: "3 days"` applies to **all automerged updates**
+- `minimumReleaseAge: "3 days"` applies to **all automerged updates** without exception
 - Rationale: Community has time to find issues before automerge
-- **Exception:** Security vulnerabilities (`osv-offline` datasource) bypass stabilization
-  - Creates PRs immediately for CVEs and security advisories
-  - Prevents 3-day delay for critical security patches
+- Applies uniformly to pre-commit hooks, GitHub Actions, and dependency updates
 - Can be overridden per packageRule if needed (e.g., `"minimumReleaseAge": "0 days"` for trusted internal packages)
 
 **Automerge Rules:**
 
-| Update Type | Automerge? | Stabilization | Reason |
-|-------------|-----------|---------------|--------|
-| Security vulnerabilities | ❌ No | **0 days** | Immediate PR, manual review with `security` label |
-| pre-commit hooks | ✅ Yes | 3 days | Low risk, frequently updated |
-| github-actions | ✅ Yes | 3 days | Low risk, frequently updated |
+| Update Type | Automerge? | Stabilization | Special Handling |
+|-------------|-----------|---------------|------------------|
+| Security vulnerabilities | ❌ No | 3 days | Manual review with `security` label via `vulnerabilityAlerts` |
+| pre-commit hooks | ✅ Yes | 3 days | **ignoreTests: true** - automerges even if CI fails |
+| github-actions | ✅ Yes | 3 days | Requires CI to pass |
 | Minor/patch updates | ✅ Yes | 3 days | Semantic versioning guarantees |
 | Pin/digest updates | ✅ Yes | 3 days | Security, no version change |
 | Major updates | ❌ No | N/A | Requires manual review |

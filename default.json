@@ -15,6 +15,7 @@
   ],
   "automergeType": "branch",
   "platformAutomerge": true,
+  "branchConcurrentLimit": 3,
   "prCreation": "not-pending",
   "rebaseWhen": "behind-base-branch",
   "minimumReleaseAge": "3 days",
@@ -27,9 +28,16 @@
   },
   "packageRules": [
     {
-      "description": "Automerge pre-commit hooks and GitHub Actions",
+      "description": "pre-commit - Automerge all updates",
       "matchManagers": [
-        "pre-commit",
+        "pre-commit"
+      ],
+      "automerge": true,
+      "ignoreTests": true
+    },
+    {
+      "description": "Automerge GitHub Actions",
+      "matchManagers": [
         "github-actions"
       ],
       "automerge": true
@@ -59,13 +67,6 @@
         "major"
       ],
       "automerge": false
-    },
-    {
-      "description": "Security vulnerabilities - immediate PR creation without stabilization wait",
-      "matchDatasources": [
-        "osv-offline"
-      ],
-      "minimumReleaseAge": "0 days"
     }
   ],
   "vulnerabilityAlerts": {

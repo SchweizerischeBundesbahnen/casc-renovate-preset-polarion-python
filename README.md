@@ -14,16 +14,17 @@ Renovate bot preset configuration for Python projects at SBB (Schweizerische Bun
 
 ### Automerge Strategy
 - 🔀 **Branch-based automerge** - Silent merges when tests pass
+- 🤖 **Platform automerge** - Uses GitHub's native auto-merge feature
 - ⏱️ **3-day stabilization** - All updates wait 3 days after release before automerge
-- 🚨 **Security exception** - Vulnerability alerts bypass stabilization (immediate PRs)
+- 🔢 **Concurrent limit** - Maximum 3 update branches to avoid overwhelming CI
 - 📦 **Lock file maintenance** - Monday 4am transitive dependency updates
-- 🔒 **Safe boundaries** - Manual review required for major updates
-- 🔐 **Security alerts** - Manual review with `security` label, created immediately
+- 🔒 **Safe boundaries** - Manual review required for major updates and security alerts
+- 🔐 **Security alerts** - Manual review with `security` label
 - 🐍 **Python >=3.12** - Enforces minimum Python version compatibility
-- ⚡ **Auto-updates:**
-  - Pre-commit hooks (after 3 days)
-  - GitHub Actions (after 3 days)
-  - Minor/patch updates (after 3 days)
+- ⚡ **Auto-updates (after 3 days):**
+  - Pre-commit hooks (automerges even if tests fail)
+  - GitHub Actions (requires CI to pass)
+  - Minor/patch updates (requires CI to pass)
 
 ## How to Use
 
@@ -66,19 +67,19 @@ This restriction ensures predictable, Python-only behavior across all repositori
 
 ### Automerge Rules
 
-| Update Type | Automerged? | Stabilization Period |
-|-------------|-------------|---------------------|
-| Security vulnerabilities | ❌ No (manual review) | **0 days (immediate)** |
-| Pre-commit hooks | ✅ Yes | 3 days |
-| GitHub Actions | ✅ Yes | 3 days |
-| Minor/patch updates | ✅ Yes | 3 days |
-| Major updates | ❌ No (manual review) | N/A |
+| Update Type | Automerged? | Stabilization Period | Special Handling |
+|-------------|-------------|---------------------|------------------|
+| Security vulnerabilities | ❌ No (manual review) | 3 days | `security` label via `vulnerabilityAlerts` |
+| Pre-commit hooks | ✅ Yes | 3 days | **ignoreTests: true** - automerges even if CI fails |
+| GitHub Actions | ✅ Yes | 3 days | Requires CI to pass |
+| Minor/patch updates | ✅ Yes | 3 days | Requires CI to pass |
+| Major updates | ❌ No (manual review) | N/A | Breaking changes possible |
 
 **Stabilization Period:**
-- All automerged updates wait 3 days after release
-- **Exception:** Security vulnerabilities create PRs immediately (no wait)
-- Allows community time to discover issues in regular updates
+- All updates wait 3 days after release before automerge (no exceptions)
+- Allows community time to discover issues before automerge
 - Can be overridden per-repository if needed
+- **Concurrent limit:** Maximum 3 update branches to avoid overwhelming CI
 
 ### Lock File Maintenance
 
