@@ -42,10 +42,10 @@ The preset is **not a Python codebase** - it's a Renovate configuration file pub
 ### Configuration Philosophy
 
 **Python-Specific Preset:**
-- `enabledManagers` restricts scanning to: `pep621` (uv), `poetry`, `pre-commit`, `github-actions`, `renovate-config-presets`, `custom.regex`
+- `enabledManagers` restricts scanning to: `pep621` (uv), `poetry`, `pre-commit`, `github-actions`, `custom.regex`
 - This prevents accidental detection of npm, docker, terraform, etc. in Python repos
 - Explicit intent: "This is a Python-only preset"
-- Includes preset management (`renovate-config-presets`) and custom regex support (`custom.regex`) for flexibility
+- Includes custom regex support (`custom.regex`) for flexibility
 
 **Poetry → uv Migration:**
 - Poetry manager: Marked DEPRECATED with clear comment in `default.json:37-45`
@@ -126,7 +126,7 @@ Configuration: `.pre-commit-config.yaml`
 ### Renovate Preset Best Practices
 
 1. **enabledManagers behavior:**
-   - When present: Disables ALL managers except those listed (6 enabled: pep621, poetry, pre-commit, github-actions, renovate-config-presets, custom.regex)
+   - When present: Disables ALL managers except those listed (5 enabled: pep621, poetry, pre-commit, github-actions, custom.regex)
    - When absent: All 70+ managers enabled with auto-detection
    - **Keep it for this preset** - documents Python-only intent
    - See ARCHITECTURE.md for complete comparison table

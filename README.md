@@ -43,12 +43,11 @@ Add this preset to your `renovate.json`:
 
 ### Enabled Package Managers
 
-Only Python ecosystem, CI/CD, and preset management managers are enabled:
+Only Python ecosystem and CI/CD managers are enabled:
 - `pep621` - PEP 621 standard (uv, pyproject.toml, uv.lock)
 - `poetry` - Poetry (deprecated, transitional)
 - `pre-commit` - Pre-commit framework hooks
 - `github-actions` - GitHub Actions workflows
-- `renovate-config-presets` - Renovate preset references in renovate.json
 - `custom.regex` - Custom regex dependency extraction (flexible for consumers)
 
 **All other managers are disabled** (npm, docker, terraform, etc.)

@@ -30,7 +30,7 @@ All configuration options used in this preset are stable, core features with no 
 
 ## Package Manager Support Matrix
 
-### Enabled Managers (Python Ecosystem + CI/CD + Preset Management)
+### Enabled Managers (Python Ecosystem + CI/CD)
 
 **`pep621`** - PEP 621 Standard
 - Primary manager for modern Python projects
@@ -55,14 +55,6 @@ All configuration options used in this preset are stable, core features with no 
 - Handles: `.github/workflows/*.yml`
 - Updates action versions (e.g., `actions/checkout@v4`)
 - Includes digest pinning via `config:best-practices`
-
-**`renovate-config-presets`** - Renovate Preset References
-- Handles: `renovate.json`, `.renovaterc`, etc.
-- Updates preset references in `extends` arrays
-- **Critical for this repository** - keeps `renovate.json` updated
-- Only updates pinned preset versions (e.g., `github>user/preset#v1.2.3`)
-- Unpinned references (e.g., `github>user/preset`) are not updated
-- Enabled by default in Renovate, but disabled when `enabledManagers` is used
 
 **`custom.regex`** - Custom Regex Managers
 - Enables custom dependency extraction via regex patterns
@@ -97,19 +89,19 @@ This preset is named `casc-renovate-preset-polarion-python` - the Python scope i
 
 | Aspect | **Without enabledManagers** (Default) | **With enabledManagers** (Current) |
 |--------|--------------------------------------|-----------------------------------|
-| Managers active | All 70+ managers scan automatically | Only 6 specified: pep621, poetry, pre-commit, github-actions, renovate-config-presets, custom.regex |
+| Managers active | All 70+ managers scan automatically | Only 5 specified: pep621, poetry, pre-commit, github-actions, custom.regex |
 | Python deps | ✅ Detected | ✅ Detected |
 | npm/Node.js | ✅ Detected if present | ❌ Disabled |
 | Docker | ✅ Detected if present | ❌ Disabled |
 | Terraform | ✅ Detected if present | ❌ Disabled |
-| Renovate presets | ✅ Detected | ✅ Explicitly enabled |
+| Renovate presets | ✅ Detected | ❌ Disabled (not needed - this IS the preset) |
 | Custom regex | ✅ Enabled by default | ✅ Explicitly enabled |
 | Intent | Generic - detects everything | Explicit - Python-only preset |
 | Warnings | None | Warns if enabled manager finds no files |
 
 ### Advantages of Using enabledManagers ✅
 
-- **Explicit control** - only Python ecosystem + preset management
+- **Explicit control** - only Python ecosystem + CI/CD
 - **Prevents accidental detection** (e.g., stray `package.json` in docs/)
 - **Clear intent**: "This is a Python-only preset"
 - **Self-documenting code** - manager list documents scope
