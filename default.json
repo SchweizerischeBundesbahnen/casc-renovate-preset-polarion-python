@@ -12,12 +12,14 @@
     "github-actions",
     "custom.regex"
   ],
+  "dependencyDashboard": true,
   "automergeType": "branch",
   "platformAutomerge": true,
   "branchConcurrentLimit": 3,
-  "prCreation": "not-pending",
+  "prCreation": "status-success",
   "rebaseWhen": "behind-base-branch",
   "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
   "lockFileMaintenance": {
     "enabled": true,
     "automerge": true,
@@ -26,21 +28,6 @@
     ]
   },
   "packageRules": [
-    {
-      "description": "pre-commit - Automerge all updates",
-      "matchManagers": [
-        "pre-commit"
-      ],
-      "automerge": true,
-      "ignoreTests": true
-    },
-    {
-      "description": "Automerge GitHub Actions",
-      "matchManagers": [
-        "github-actions"
-      ],
-      "automerge": true
-    },
     {
       "description": "DEPRECATED: Poetry support - Remove after migration to uv is complete",
       "matchManagers": [
@@ -51,7 +38,7 @@
       ]
     },
     {
-      "description": "Automerge non-major updates",
+      "description": "Automerge non-major updates (minor, patch, pin, digest)",
       "matchUpdateTypes": [
         "minor",
         "patch",
@@ -61,7 +48,22 @@
       "automerge": true
     },
     {
-      "description": "Major updates require manual review",
+      "description": "Automerge GitHub Actions updates",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "pre-commit hooks - Automerge even if tests fail (low-risk tooling updates)",
+      "matchManagers": [
+        "pre-commit"
+      ],
+      "automerge": true,
+      "ignoreTests": true
+    },
+    {
+      "description": "Major updates require manual review (potential breaking changes)",
       "matchUpdateTypes": [
         "major"
       ],

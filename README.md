@@ -15,8 +15,9 @@ Renovate bot preset configuration for Python projects at SBB (Schweizerische Bun
 ### Automerge Strategy
 - 🔀 **Branch-based automerge** - Silent merges when tests pass
 - 🤖 **Platform automerge** - Uses GitHub's native auto-merge feature
-- ⏱️ **3-day stabilization** - All updates wait 3 days after release before automerge
+- ⏱️ **3-day stabilization** - All updates wait 3 days after release before automerge (strictly enforced)
 - 🔢 **Concurrent limit** - Maximum 3 update branches to avoid overwhelming CI
+- 📊 **Dependency Dashboard** - Monitor pending updates waiting for stabilization
 - 📦 **Lock file maintenance** - Monday 4am transitive dependency updates
 - 🔒 **Safe boundaries** - Manual review required for major updates and security alerts
 - 🔐 **Security alerts** - Manual review with `security` label

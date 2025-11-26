@@ -18,11 +18,13 @@ All configuration options used in this preset are stable, core features with no 
 - `:semanticCommits` - Enables conventional commit message format
 
 **Core Settings:**
+- `dependencyDashboard: true` - Enables dependency dashboard to monitor pending updates
 - `automergeType: "branch"` - Silent automerge (PR only created if tests fail)
 - `platformAutomerge: true` - Uses GitHub's native auto-merge feature
 - `branchConcurrentLimit: 3` - Maximum 3 concurrent update branches
 - `minimumReleaseAge: "3 days"` - Global stabilization period for all automerged updates
-- `prCreation: "not-pending"` - Create PRs immediately, don't wait for status
+- `internalChecksFilter: "strict"` - Strictly enforce minimumReleaseAge before creating branches
+- `prCreation: "status-success"` - Only create PRs after tests pass (for failed branch automerges)
 - `rebaseWhen: "behind-base-branch"` - Keep branches up to date
 - `lockFileMaintenance` - Monday 4am automated lock file updates for transitive dependencies
 - `vulnerabilityAlerts` - Enabled with `security` label, manual review required
@@ -153,20 +155,24 @@ Must use prefix: `"custom.regex"`
 
 **Configuration:**
 ```json
+"dependencyDashboard": true,
 "automergeType": "branch",
 "platformAutomerge": true,
 "branchConcurrentLimit": 3,
-"minimumReleaseAge": "3 days"
+"prCreation": "status-success",
+"minimumReleaseAge": "3 days",
+"internalChecksFilter": "strict"
 ```
 
 **Behavior:**
 1. Renovate creates a branch for updates
-2. **Waits 3 days after release** (stabilization period)
+2. **Waits 3 days after release** (stabilization period, strictly enforced via `internalChecksFilter`)
 3. CI runs on the branch after waiting period
 4. **If tests pass:** Changes pushed directly to base branch (silent merge)
-5. **If tests fail:** PR created for manual review
+5. **If tests fail:** PR created for manual review (only after tests complete via `prCreation: "status-success"`)
 6. No notifications for successful automerges
 7. Maximum 3 concurrent update branches to avoid overwhelming CI
+8. **Dependency Dashboard** shows pending updates waiting for stabilization period
 
 **Global Stabilization Period:**
 - `minimumReleaseAge: "3 days"` applies to **all automerged updates** without exception
@@ -296,11 +302,18 @@ Format: `camelCase`
 - Lock file maintenance enabled (transitive deps)
 - Digest pinning for GitHub Actions (via `config:best-practices`)
 - Gitleaks in pre-commit hooks
+- `internalChecksFilter: "strict"` ensures stabilization period is enforced
 
 ✅ **Aggressive Automerge, Safe Boundaries**
 - Non-major updates auto-merge (semantic versioning trust)
 - Major updates require review (breaking changes possible)
 - CI must pass before any automerge
+- Dependency Dashboard provides visibility into pending updates
+
+✅ **Correct packageRules Ordering**
+- Rules ordered from least to most important (per Renovate docs)
+- General rules first, specific overrides last
+- Most important rule (`major` requiring review) comes last
 
 ## Documentation References
 
