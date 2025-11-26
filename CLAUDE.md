@@ -48,18 +48,21 @@ The preset is **not a Python codebase** - it's a Renovate configuration file pub
 - Includes custom regex support (`custom.regex`) for flexibility
 
 **Poetry → uv Migration:**
-- Poetry manager: Marked DEPRECATED with clear comment in `default.json:37-45`
+- Poetry manager: Marked DEPRECATED with clear comment in `default.json:31-39`
 - Remove Poetry from `enabledManagers` after migration complete
 - uv support: Via `pep621` manager (auto-detected by `uv.lock` presence)
 
 **Automerge Strategy:**
+- `dependencyDashboard: true` - Monitor pending updates waiting for stabilization
 - `automergeType: "branch"` - Silent automerge (PR only created if tests fail)
 - `platformAutomerge: true` - Uses GitHub native auto-merge
 - `branchConcurrentLimit: 3` - Maximum 3 concurrent update branches
+- `prCreation: "status-success"` - Only create PRs after tests complete (for failed branch automerges)
 - `minimumReleaseAge: "3 days"` - **Global 3-day stabilization** for all automerged updates (no exceptions)
   - Applies to: pre-commit, github-actions, non-major updates (minor/patch/pin/digest)
   - Rationale: Community has time to find issues before automerge
   - Can be overridden per packageRule if needed (e.g., internal SBB packages)
+- `internalChecksFilter: "strict"` - Strictly enforce stabilization period
 - Pre-commit: `ignoreTests: true` - automerges even if CI fails
 - GitHub Actions: Requires CI to pass before automerge
 - Major updates: Require manual review (`automerge: false`)
