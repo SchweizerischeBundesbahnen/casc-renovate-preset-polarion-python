@@ -25,7 +25,8 @@
     "automerge": true,
     "schedule": [
       "before 4am on monday"
-    ]
+    ],
+    "minimumReleaseAge": null
   },
   "packageRules": [
     {

@@ -67,10 +67,11 @@ The preset is **not a Python codebase** - it's a Renovate configuration file pub
 - GitHub Actions: Requires CI to pass before automerge
 - Major updates: Require manual review (`automerge: false`)
 - `lockFileMaintenance`: Enabled, Monday 4am schedule for transitive dependencies
+  - `minimumReleaseAge: null` - Disabled because package managers regenerate lock files with latest versions, ignoring stabilization (Renovate would block forever)
 
 **Security & Constraints:**
 - `vulnerabilityAlerts`: Enabled with `security` label, manual review required
-- Security vulnerabilities: Subject to 3-day stabilization like all other updates
+- Security vulnerabilities: Require manual review (`automerge: false`), never automerged
 - `constraints.python: ">=3.12"` - Enforces minimum Python version compatibility
 
 ## Development Commands
