@@ -15,7 +15,6 @@
   "dependencyDashboard": true,
   "automergeType": "branch",
   "platformAutomerge": true,
-  "branchConcurrentLimit": 3,
   "prCreation": "status-success",
   "rebaseWhen": "behind-base-branch",
   "minimumReleaseAge": "3 days",
