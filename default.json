@@ -29,15 +29,6 @@
   },
   "packageRules": [
     {
-      "description": "DEPRECATED: Poetry support - Remove after migration to uv is complete",
-      "matchManagers": [
-        "poetry"
-      ],
-      "postUpdateOptions": [
-        "poetry-lock"
-      ]
-    },
-    {
       "description": "Automerge non-major updates (minor, patch, pin, digest)",
       "matchUpdateTypes": [
         "minor",
