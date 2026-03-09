@@ -8,6 +8,8 @@ This repository contains a **Renovate bot preset configuration** for Python proj
 
 **Version Compatibility:** Renovate v41+ (tested with v42.17.0 as of November 2025)
 
+**Architecture:** Extends [casc-renovate-preset-polarion](https://github.com/SchweizerischeBundesbahnen/casc-renovate-preset-polarion) (shared base preset) and adds only Python-specific configuration (`enabledManagers`, `constraints`). All shared rules (automerge strategy, security, lockfile maintenance, etc.) live in the base preset.
+
 It is consumed by other repositories via:
 
 ```json

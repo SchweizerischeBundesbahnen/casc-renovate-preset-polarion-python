@@ -1,82 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Default Renovate preset for Python repositories maintained by the SBB Polarion Team.",
+  "description": "Renovate preset for Polarion Python repositories maintained by the SBB Polarion Team",
   "extends": [
-    "config:best-practices",
-    ":semanticCommits"
+    "github>SchweizerischeBundesbahnen/casc-renovate-preset-polarion"
   ],
+  "constraints": {
+    "python": ">=3.12"
+  },
   "enabledManagers": [
     "pep621",
     "pre-commit",
     "github-actions",
     "custom.regex"
-  ],
-  "dependencyDashboard": true,
-  "automergeType": "branch",
-  "platformAutomerge": true,
-  "prCreation": "status-success",
-  "rebaseWhen": "behind-base-branch",
-  "minimumReleaseAge": "3 days",
-  "internalChecksFilter": "strict",
-  "lockFileMaintenance": {
-    "enabled": true,
-    "automerge": true,
-    "schedule": [
-      "before 4am on monday"
-    ],
-    "minimumReleaseAge": null
-  },
-  "packageRules": [
-    {
-      "description": "Automerge non-major updates (minor, patch, pin, digest)",
-      "matchUpdateTypes": [
-        "minor",
-        "patch",
-        "pin",
-        "digest"
-      ],
-      "automerge": true
-    },
-    {
-      "description": "Major updates require manual review (potential breaking changes)",
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "automerge": false
-    },
-    {
-      "description": "Automerge GitHub Actions updates including major versions",
-      "matchManagers": [
-        "github-actions"
-      ],
-      "automerge": true
-    },
-    {
-      "description": "pre-commit hooks - Automerge even if tests fail (low-risk tooling updates)",
-      "matchManagers": [
-        "pre-commit"
-      ],
-      "automerge": true,
-      "ignoreTests": true
-    },
-    {
-      "description": "Vulnerability alerts get highest priority to jump rate limit queue (prHourlyLimit/prConcurrentLimit)",
-      "matchCategories": [
-        "security"
-      ],
-      "prPriority": 99
-    }
-  ],
-  "osvVulnerabilityAlerts": true,
-  "vulnerabilityAlerts": {
-    "enabled": true,
-    "labels": [
-      "security"
-    ],
-    "automerge": false,
-    "minimumReleaseAge": "0 days"
-  },
-  "constraints": {
-    "python": ">=3.12"
-  }
+  ]
 }

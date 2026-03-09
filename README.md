@@ -2,6 +2,8 @@
 
 Renovate bot preset configuration for Python projects at SBB (Schweizerische Bundesbahnen).
 
+Extends [casc-renovate-preset-polarion](https://github.com/SchweizerischeBundesbahnen/casc-renovate-preset-polarion) (shared base) and adds Python-specific configuration.
+
 **Compatible with:** Renovate v41+ (tested with v42.17.0)
 
 ## Features
@@ -141,11 +143,6 @@ pre-commit run --all-files
 Changes to `default.json` are **live immediately** when merged to `main` branch.
 
 ⚠️ **No CI/CD pipeline** - all consuming repositories will receive updates directly.
-
-## Documentation
-
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Technical analysis and design decisions
-- **[CLAUDE.md](CLAUDE.md)** - AI assistant development guidance
 
 ## Support
 
