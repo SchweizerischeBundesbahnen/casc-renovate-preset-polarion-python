@@ -69,9 +69,9 @@ This restriction ensures predictable, Python-only behavior across all repositori
 
 | Update Type | Automerged? | Stabilization Period | Special Handling |
 |-------------|-------------|---------------------|------------------|
-| Security vulnerabilities | ❌ No (manual review) | 3 days | `security` label via `vulnerabilityAlerts` |
-| Pre-commit hooks | ✅ Yes | 3 days | **ignoreTests: true** - automerges even if CI fails |
-| GitHub Actions | ✅ Yes | 3 days | Requires CI to pass |
+| Security vulnerabilities | ❌ No (manual review) | 0 days | `security` label, `prPriority: 99` to jump rate limit queue |
+| Pre-commit hooks (any incl. major) | ✅ Yes | 3 days | **ignoreTests: true** - automerges even if CI fails |
+| GitHub Actions (any incl. major) | ✅ Yes | 3 days | Requires CI to pass |
 | Minor/patch updates | ✅ Yes | 3 days | Requires CI to pass |
 | Major updates | ❌ No (manual review) | N/A | Breaking changes possible |
 
