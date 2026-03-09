@@ -60,12 +60,14 @@
       "ignoreTests": true
     }
   ],
+  "osvVulnerabilityAlerts": true,
   "vulnerabilityAlerts": {
     "enabled": true,
     "labels": [
       "security"
     ],
-    "automerge": false
+    "automerge": false,
+    "minimumReleaseAge": "0 days"
   },
   "constraints": {
     "python": ">=3.12"
