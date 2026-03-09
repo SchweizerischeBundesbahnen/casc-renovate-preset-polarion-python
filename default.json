@@ -7,7 +7,6 @@
   ],
   "enabledManagers": [
     "pep621",
-    "poetry",
     "pre-commit",
     "github-actions",
     "custom.regex"
@@ -39,7 +38,14 @@
       "automerge": true
     },
     {
-      "description": "Automerge GitHub Actions updates",
+      "description": "Major updates require manual review (potential breaking changes)",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Automerge GitHub Actions updates including major versions",
       "matchManagers": [
         "github-actions"
       ],
@@ -52,13 +58,6 @@
       ],
       "automerge": true,
       "ignoreTests": true
-    },
-    {
-      "description": "Major updates require manual review (potential breaking changes)",
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "automerge": false
     }
   ],
   "vulnerabilityAlerts": {
