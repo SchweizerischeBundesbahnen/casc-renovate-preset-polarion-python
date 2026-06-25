@@ -15,22 +15,11 @@
   ],
   "packageRules": [
     {
-      "description": "Internal SBB packages - Automerge minor/patch immediately",
-      "matchPackagePatterns": [
-        "^ch\\.sbb\\.",
-        "^SchweizerischeBundesbahnen/ch\\.sbb\\.",
-        "^python-sbb-polarion$"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch"
-      ],
-      "automerge": true,
-      "minimumReleaseAge": "0 days"
-    },
-    {
-      "description": "Internal SBB container images - no minimum-release-age wait (gated by system-tests; not scoped to minor/patch because the Polarion image's YYMM-N tags bump as major)",
+      "description": "Internal SBB packages and container images - skip the minimum-release-age stability wait (automerge left to the base preset: minor/patch auto, major manual; merges gated by system-tests)",
       "matchPackageNames": [
+        "/^ch\\.sbb\\./",
+        "/^SchweizerischeBundesbahnen\\/ch\\.sbb\\./",
+        "python-sbb-polarion",
         "sbb.jfrog.io/polarion-docker/polarion/polarion",
         "ghcr.io/schweizerischebundesbahnen/*-service"
       ],
