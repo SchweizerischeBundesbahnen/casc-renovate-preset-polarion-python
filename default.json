@@ -12,5 +12,20 @@
     "pre-commit",
     "github-actions",
     "custom.regex"
+  ],
+  "packageRules": [
+    {
+      "description": "Internal SBB packages - Automerge minor/patch immediately",
+      "matchPackagePatterns": [
+        "^ch\\.sbb\\.",
+        "^python-sbb-polarion$"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true,
+      "minimumReleaseAge": "0 days"
+    }
   ]
 }
