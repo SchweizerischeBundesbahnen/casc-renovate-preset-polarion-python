@@ -18,6 +18,7 @@
       "description": "Internal SBB packages - Automerge minor/patch immediately",
       "matchPackagePatterns": [
         "^ch\\.sbb\\.",
+        "^SchweizerischeBundesbahnen/ch\\.sbb\\.",
         "^python-sbb-polarion$"
       ],
       "matchUpdateTypes": [
@@ -25,6 +26,13 @@
         "patch"
       ],
       "automerge": true,
+      "minimumReleaseAge": "0 days"
+    },
+    {
+      "description": "Polarion SUT image - no minimum-release-age wait (internal JFrog registry; its YYMM-N tags bump as major, so this is not scoped to minor/patch)",
+      "matchPackageNames": [
+        "sbb.jfrog.io/polarion-docker/polarion/polarion"
+      ],
       "minimumReleaseAge": "0 days"
     }
   ]
