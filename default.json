@@ -12,18 +12,5 @@
     "pre-commit",
     "github-actions",
     "custom.regex"
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "description": "Track python-sbb-polarion pinned by git tag in [tool.uv.sources] (the pep621/uv manager does not bump git-source tags)",
-      "managerFilePatterns": [
-        "/(^|/)pyproject\\.toml$/"
-      ],
-      "matchStrings": [
-        "python-sbb-polarion\\s*=\\s*\\{[^}]*\\bgit\\s*=\\s*\"https://github\\.com/(?<depName>SchweizerischeBundesbahnen/python-sbb-polarion)\"[^}]*\\btag\\s*=\\s*\"(?<currentValue>v?[0-9][^\"]*)\""
-      ],
-      "datasourceTemplate": "github-releases"
-    }
   ]
 }
