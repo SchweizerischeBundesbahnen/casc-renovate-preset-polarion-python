@@ -29,9 +29,10 @@
       "minimumReleaseAge": "0 days"
     },
     {
-      "description": "Polarion SUT image - no minimum-release-age wait (internal JFrog registry; its YYMM-N tags bump as major, so this is not scoped to minor/patch)",
+      "description": "Internal SBB container images - no minimum-release-age wait (gated by system-tests; not scoped to minor/patch because the Polarion image's YYMM-N tags bump as major)",
       "matchPackageNames": [
-        "sbb.jfrog.io/polarion-docker/polarion/polarion"
+        "sbb.jfrog.io/polarion-docker/polarion/polarion",
+        "ghcr.io/schweizerischebundesbahnen/*-service"
       ],
       "minimumReleaseAge": "0 days"
     }
